@@ -449,10 +449,6 @@ jobs:
         run: |
           docker run --env-file=docker_env.txt -v `pwd`:/duckdb_build_dir -v `pwd`/ccache_dir:/ccache_dir duckdb/${{ matrix.duckdb_arch }} make ${{ inputs.build_type }}
 
-      - name: Setup tmate session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
-
       - name: Save Ccache
         if: ${{ inputs.save_cache }}
         uses: actions/cache/save@v4
@@ -499,6 +495,11 @@ jobs:
             cat $filename;
             echo Done printing logs for $filename
           done
+
+      # XXX: removeme
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
 
   macos:
     name: MacOS
