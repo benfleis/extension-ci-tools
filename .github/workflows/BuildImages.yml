@@ -12,8 +12,8 @@ on:
 
 env:
   # default to all toolchains when building image
-EXTRA_TOOLCHAINS: parser_tools;fortran;rust;go;unixodbc
-VCPKG_URL: https://github.com/Microsoft/vcpkg.git
+  EXTRA_TOOLCHAINS: parser_tools;fortran;rust;go;unixodbc
+  VCPKG_URL: https://github.com/Microsoft/vcpkg.git
 
 defaults:
   run:
