@@ -30,12 +30,12 @@ jobs:
       - name: Build Docker image
         shell: bash
         run: |
-          echo IMAGE_TS=$(TZ=Z date +'%Y-%m-%dT%H-%M-%SZ') >> GITHUB_ENV
+          echo IMAGE_TS=$(TZ=Z date +'%Y-%m-%dT%H-%M-%SZ') >> $GITHUB_ENV
           docker build \
             --build-arg 'vcpkg_url=${{ env.VCPKG_URL }}' \
             --build-arg 'vcpkg_commit=main' \
             --build-arg 'extra_toolchains=${{ env.EXTRA_TOOLCHAINS }}' \
-            -t duckdb/${{ inputs.duckdb_arch }} \
+            -t "duckdb/${{ inputs.duckdb_arch }}:$IMAGE_TS" \
             ./extension-ci-tools/docker/${{ inputs.duckdb_arch }}
 
 
