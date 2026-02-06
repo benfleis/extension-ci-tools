@@ -1,0 +1,38 @@
+name: Build (Docker) Build Images
+on:
+  workflow_dispatch:
+    inputs:
+      duckdb_arch:
+        required: true
+        type: string
+        options:
+          - linux_amd64
+          - linux_amd64_musl
+          - linux_arm64
+
+env:
+  # default to all toolchains when building image
+  EXTRA_TOOLCHAINS=parser_tools;fortran;rust;go;unixodbc
+  VCPKG_URL=https://github.com/Microsoft/vcpkg.git
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-build-image:
+    name: Build build-ready manylinux docker image
+    steps:
+      - name: Build Docker image
+        shell: bash
+        run: |
+          echo IMAGE_TS=$(TZ=Z date +'%Y-%m-%dT%H-%M-%SZ') >> GITHUB_ENV
+          docker build \
+            --build-arg 'vcpkg_url=${{ env.VCPKG_URL }}' \
+            --build-arg 'vcpkg_commit=main' \
+            --build-arg 'extra_toolchains=${{ env.EXTRA_TOOLCHAINS }}' \
+            -t duckdb/${{ matrix.duckdb_arch }} \
+            ./extension-ci-tools/docker/${{ matrix.duckdb_arch }}
+
+
+
