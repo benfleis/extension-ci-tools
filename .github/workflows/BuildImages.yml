@@ -10,6 +10,8 @@ on:
           - linux_amd64_musl
           - linux_arm64
 
+  push: # delete me later
+
 env:
   # default to all toolchains when building image
   EXTRA_TOOLCHAINS: parser_tools;fortran;rust;go;unixodbc
