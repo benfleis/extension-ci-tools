@@ -1,4 +1,4 @@
-name: Build (Docker) Build Images
+name: Build Images
 on:
   workflow_dispatch:
     inputs:
@@ -11,6 +11,7 @@ on:
           - linux_arm64
 
   push: # delete me later
+
 
 env:
   # default to all toolchains when building image
@@ -34,8 +35,8 @@ jobs:
             --build-arg 'vcpkg_url=${{ env.VCPKG_URL }}' \
             --build-arg 'vcpkg_commit=main' \
             --build-arg 'extra_toolchains=${{ env.EXTRA_TOOLCHAINS }}' \
-            -t duckdb/${{ matrix.duckdb_arch }} \
-            ./extension-ci-tools/docker/${{ matrix.duckdb_arch }}
+            -t duckdb/${{ inputs.duckdb_arch }} \
+            ./extension-ci-tools/docker/${{ inputs.duckdb_arch }}
 
 
 
