@@ -493,7 +493,7 @@ jobs:
 
       - name: tmate
         if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
-        uses: mxschmitt/action-tmate@main
+        uses: mxschmitt/action-tmate@v3
 
   macos:
     name: ${{ matrix.duckdb_arch }}
@@ -745,7 +745,7 @@ jobs:
 
       - name: tmate
         if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
-        uses: mxschmitt/action-tmate@main
+        uses: mxschmitt/action-tmate@v3
 
   windows:
     name: ${{ matrix.duckdb_arch }}
@@ -1021,7 +1021,7 @@ jobs:
 
       - name: tmate
         if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
-        uses: mxschmitt/action-tmate@main
+        uses: mxschmitt/action-tmate@v3
 
   wasm:
     name: ${{ matrix.duckdb_arch }}
@@ -1213,4 +1213,4 @@ jobs:
 
       - name: tmate
         if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
-        uses: mxschmitt/action-tmate@main
+        uses: mxschmitt/action-tmate@v3
