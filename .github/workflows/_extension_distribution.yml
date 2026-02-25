@@ -171,6 +171,11 @@ on:
         required: false
         type: string
         default: 'regular'
+      tmate_on:
+        required: false
+        type: string
+        default: 'never' # never, always, failure
+
 
 env:
   VCPKG_BINARY_SOURCES: ${{inputs.vcpkg_binary_sources == '' && 'clear;http,https://vcpkg-cache.duckdb.org,read' || inputs.vcpkg_binary_sources }}
@@ -486,6 +491,10 @@ jobs:
             echo Done printing logs for $filename
           done
 
+      - name: tmate
+        if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
+        uses: mxschmitt/action-tmate@main
+
   macos:
     name: ${{ matrix.duckdb_arch }}
     runs-on: macos-latest
@@ -733,6 +742,10 @@ jobs:
             cat $filename;
             echo Done printing logs for $filename
           done
+
+      - name: tmate
+        if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
+        uses: mxschmitt/action-tmate@main
 
   windows:
     name: ${{ matrix.duckdb_arch }}
@@ -1006,6 +1019,10 @@ jobs:
         run: |
           mv C:\rtools42\usr\bin\zstd.exe C:\rtools42\usr\bin\zstd-rtools.exe
 
+      - name: tmate
+        if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
+        uses: mxschmitt/action-tmate@main
+
   wasm:
     name: ${{ matrix.duckdb_arch }}
     runs-on: ubuntu-latest
@@ -1193,3 +1210,7 @@ jobs:
             cat $filename;
             echo Done printing logs for $filename
           done
+
+      - name: tmate
+        if: ${{ inputs.tmate_on == 'always' || (inputs.tmate_on == 'failure' && failure()) }}
+        uses: mxschmitt/action-tmate@main
